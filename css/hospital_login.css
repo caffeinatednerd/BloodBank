@@ -1,0 +1,16 @@
+#register_form {
+    display: none;    
+}
+
+#login_toggle, #register_toggle {
+    color: #3274D6;
+    cursor: pointer;
+}
+
+.login_div, .register_div {
+    padding-bottom: 20px;
+}
+
+/*.login form input[type="submit"], .register form input[type="submit"] {
+    font-size: 18px;
+}*/

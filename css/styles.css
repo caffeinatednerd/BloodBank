@@ -1,0 +1,26 @@
+body {
+    margin-top: 40px;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+.btn-huge {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin: 0px 20px 20px 20px;
+    width: 100%;
+    font-size: 30px;
+    border-radius: 20px;
+}
+
+/*.btn-huge {
+    padding: 10px 20px;
+    
+    width:50%;    //Specify your width here
+}
+*/
+.centralize {
+    text-align: center;
+}

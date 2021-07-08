@@ -1,0 +1,20 @@
+#register_form {
+    display: none;    
+}
+
+#login_toggle, #register_toggle {
+    color: #3274D6;
+    cursor: pointer;
+}
+
+.login_div, .register_div {
+    padding-bottom: 20px;
+}
+
+.register form select {
+    width: 310px;
+    height: 50px;
+    border: 1px solid #dee0e4;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
