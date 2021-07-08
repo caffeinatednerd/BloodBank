@@ -1,11 +1,11 @@
 <?php
 
 session_start();
-// If user is not logged in, redirect to login page
 
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
+if(!isset($_SESSION['message'])) {
+    $message = '';
+} else {
+    $message = $_SESSION['message'];
 }
 
 ?>
@@ -23,7 +23,7 @@ if (!isset($_SESSION['loggedin'])) {
 
     <link rel="stylesheet" type="text/css" href="../css/hospital_page.css">
 </head>
-<body class="loggedin" style="margin: 0 auto;">
+<body onload="hideLoadingDiv()" class="loggedin" style="margin: 0 auto;">
     <nav class="navtop">
         <div>
             <h1><a href="hospital_home.php" style="padding: 0 0;">Blood Bank App</a></h1>
@@ -33,26 +33,56 @@ if (!isset($_SESSION['loggedin'])) {
     </nav>
 
     <div class="content">
-        <h2>Home Page</h2>
-        <p>Welcome <?= $_SESSION['hospital_name'] ?>!</p>
+        <!-- <h2>Add Blood Information</h2> -->
 
 
     <div class="container">
-        <div class="container py-4 centralize">
-            <div class="row align-items-md-stretch">
-              <div class="col-md-4">
-                <a href="add_blood_info.php" class="btn btn-outline-success btn-lg btn-huge">Add Blood Info</a>
-              </div>
-              <div class="col-md-4">
-                <a href="../available_blood_samples.php" class="btn btn-outline-danger btn-lg btn-huge">Available Blood Samples</a>
-              </div>
-              <div class="col-md-4">
-                <a href="view_requests.php" class="btn btn-outline-primary btn-lg btn-huge">View Requests</a>
-              </div>
+        <h2 class="centralize">Add Blood Sample Information</h2>
+        <form action="validate_add_blood_info.php" method="post">
+            <div class="container py-4 centralize">
+                <div class="row align-items-md-stretch">
+                  <div class="col-md-6 mt-3">
+                    <select class="form-select" aria-label="Default select example" name="blood_group" required>
+                      <option value="" disabled selected>Blood Group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mt-3">
+                    <input name="blood_litres" type="number" step="0.1" min=0 class="form-control" placeholder="Litres of Blood Available" required>
+                  </div>
+                </div>
+                <div class="top mt-4">
+                    <button type="submit" class="btn btn-dark btn-block btn-sm">Submit</button>
+                </div>
             </div>
-        </div>
+        </form>
+
+        <div class="centralize" id="message"><?= $message ?></div>
+        
     </div>
+
     </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous">      
+    </script>
+
+    <script>
+        function hideLoadingDiv() {
+          setTimeout(function(){
+            document.getElementById('message').classList.add('hidden');
+          }, 5000)
+        }
+    </script>
 
 </body>
 </html>

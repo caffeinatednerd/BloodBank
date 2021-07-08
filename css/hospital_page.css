@@ -81,3 +81,17 @@ body.loggedin {
 .centralize {
     text-align: center;
 }
+
+.btn-sm {
+    min-height: 33px !important;
+    min-width: 100px !important;
+    width: 2rem;
+}
+
+#message {
+    color: #32CD32;
+}
+
+.hidden {
+    display: none;
+}
