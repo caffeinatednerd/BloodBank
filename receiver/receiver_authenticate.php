@@ -24,7 +24,7 @@ if( !isset($_POST['username'], $_POST['password'] )) {
 }
 
 // prepare a statment for getting id and password for current user from db
-if($stmt = $con->prepare('SELECT id, password, email, blood_group FROM receiver_accounts WHERE username = ?')) {
+if($stmt = $con->prepare('SELECT id, password, email, blood_group, receiver_name FROM receiver_accounts WHERE username = ?')) {
 
     $stmt->bind_param('s', $_POST['username']);
     // execute query
@@ -35,7 +35,7 @@ if($stmt = $con->prepare('SELECT id, password, email, blood_group FROM receiver_
     // check if there are any entries in db for above query
     if($stmt->num_rows > 0) {
         // bind the result to variables
-        $stmt->bind_result($id, $password, $email, $blood_group);
+        $stmt->bind_result($id, $password, $email, $blood_group, $receiver_name);
         $stmt->fetch();
         // Account exists, now we verify the password.
         if(password_verify($_POST['password'], $password)) {
@@ -46,8 +46,7 @@ if($stmt = $con->prepare('SELECT id, password, email, blood_group FROM receiver_
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $id;
-            $_SESSION['email'] = $email;
-            $_SESSION['blood_group'] = $blood_group;
+            $_SESSION['receiver_name'] = $receiver_name;
 
             // Redirect to hospital_home
             header('Location: receiver_home.php');

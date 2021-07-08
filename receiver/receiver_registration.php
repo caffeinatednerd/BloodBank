@@ -15,12 +15,12 @@ if( mysqli_connect_errno() ) {
 }
 
 // check if the data was submitted, isset() function will check if the data exists
-if (!isset($_POST['username'], $_POST['password'], $_POST['email'], $_POST['blood_group'])) {
+if (!isset($_POST['username'], $_POST['password'], $_POST['email'], $_POST['blood_group'], $_POST['receiver_name'])) {
     // Could not get the data that should have been sent
     exit('Please complete the registration form!');
 }
 // Make sure the submitted registration values are not empty
-if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email']) || empty($_POST['blood_group'])) {
+if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email']) || empty($_POST['blood_group']) || empty($_POST['receiver_name'])) {
     // One or more values are empty
     exit('Please complete the registration form');
 }
@@ -39,7 +39,7 @@ if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 }
 
 // check if the account with that username exists
-if ($stmt = $con->prepare('SELECT id, password, email, blood_group FROM receiver_accounts WHERE username = ?')) {
+if ($stmt = $con->prepare('SELECT id, password, email, blood_group, receiver_name FROM receiver_accounts WHERE username = ?')) {
     $stmt->bind_param('s', $_POST['username']);
     $stmt->execute();
     $stmt->store_result();
@@ -50,10 +50,10 @@ if ($stmt = $con->prepare('SELECT id, password, email, blood_group FROM receiver
     } else {
         // Insert new account
         // Username doesnt exists, insert new account
-        if ($stmt = $con->prepare('INSERT INTO receiver_accounts (username, password, email, blood_group) VALUES (?, ?, ?, ?)')) {
+        if ($stmt = $con->prepare('INSERT INTO receiver_accounts (username, password, email, blood_group, receiver_name) VALUES (?, ?, ?, ?, ?)')) {
             // hash the password and use password_verify when a user logs in
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $stmt->bind_param('ssss', $_POST['username'], $password, $_POST['email'], $_POST['blood_group']);
+            $stmt->bind_param('sssss', $_POST['username'], $password, $_POST['email'], $_POST['blood_group'], $_POST['receiver_name']);
             $stmt->execute();
             echo 'Receiver registered successfully!';
             echo '<br>';

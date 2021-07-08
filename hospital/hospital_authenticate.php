@@ -46,7 +46,6 @@ if($stmt = $con->prepare('SELECT id, password, email, hospital_name FROM hospita
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $id;
-            $_SESSION['email'] = $email;
             $_SESSION['hospital_name'] = $hospital_name;
 
             // Redirect to hospital_home

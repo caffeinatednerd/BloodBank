@@ -40,8 +40,12 @@
     <div id="register_form" class="register">
         <h1>Receiver Registration</h1>
         <form action="receiver_registration.php" method="post" autocomplete="off">
-            <label for="username">
+            <label for="receiver_name">
                 <i class="fas fa-user"></i>
+            </label>
+            <input type="text" name="receiver_name" placeholder="Name" id="receiver_name" required>
+            <label for="username">
+                <i class="fas fa-at"></i>
             </label>
             <input type="text" name="username" placeholder="Username" id="username" required>
             <label for="password">
