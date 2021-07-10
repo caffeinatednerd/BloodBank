@@ -1,8 +1,6 @@
 # BloodBank
 
 ## Pending Tasks
-- [ ] Create Available Blood Samples Page
-- [ ] Create View Requests Page
 - [ ] Customise theme of websites
 - [ ] Refactor Code repeating html & php code in a using include and require
 
@@ -12,6 +10,8 @@
 - [X] Completed Home and Profile Page of Receiver
 - [X] Designed and implemented database schemas
 - [X] Create Add Blood Info Page
+- [X] Create Available Blood Samples Page
+- [X] Create View Requests Page
 
 
 ## MySQL Database Setup Commands
@@ -64,3 +64,6 @@ CREATE TABLE IF NOT EXISTS `blood_requests` (
     `blood_group` varchar(3) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+ALTER TABLE blood_bank.blood_requests
+  ADD CONSTRAINT blood_requests UNIQUE(receiver_id, hospital_id);

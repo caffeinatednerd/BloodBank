@@ -44,6 +44,7 @@ if($stmt = $con->prepare('SELECT id, password, email, blood_group, receiver_name
 
             session_regenerate_id();
             $_SESSION['loggedin'] = TRUE;
+            $_SESSION['role'] = 'receiver';
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $id;
             $_SESSION['receiver_name'] = $receiver_name;

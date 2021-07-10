@@ -2,12 +2,69 @@
 
 session_start();
 
-// If user is not logged in, redirect to login page
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = 'blood_bank';
+
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+
+if( mysqli_connect_errno() ) {
+    // If there is any error with the connection, stop script and dispay error
+    exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 
+
+if(isset($_SESSION['loggedin'])) {
+    if($_SESSION['role'] == 'hospital') {
+        $request_link = '#';
+        $home_link = 'hospital/hospital_home.php';
+        $profile_link = 'hospital/hospital_profile.php';
+    } 
+    else if($_SESSION['role'] == 'receiver') {
+        // $request_link = 'receiver/request_blood_sample.php';
+        $home_link = 'receiver/receiver_home.php';
+        $profile_link = 'receiver/receiver_profile.php';
+
+        // get receiver's blood group
+        $stmt = $con->prepare('SELECT blood_group FROM receiver_accounts WHERE id = ?');
+        $stmt->bind_param('i', $_SESSION['id']);
+        $stmt->execute();
+        $stmt->bind_result($receiver_blood_group);
+        $stmt->fetch();
+        $stmt->close();
+    }
+
+    $profile_display = '';
+
+} else {
+    $is_disabled = '';
+    $btn_color = 'btn-outline-dark';
+    $request_link = 'receiver/receiver_login.php';
+    $profile_display = "display: none;";
+
+    $home_link = '/blood_bank/index.php';
+    $profile_link = '';
+}
+
+
+// +++++++++++++++++++++++++
+// $sql = 'SELECT hospital_id, blood_group, blood_litres FROM blood_banks';
+// $result = $con->query($sql);
+
+// if($result->num_rows > 0) {
+//     $serial = 1;
+//     while($row=$result->fetch_assoc()) {
+//         print_r($row);
+//     }
+// }
+// +++++++++++++++++++++++++
+
+$sql = 'SELECT hospital_id, blood_group, blood_litres FROM blood_banks';
+$result = $con->query($sql);
+
+if($result->num_rows > 0) {
+    $serial = 1;
 ?>
 
 <!DOCTYPE html>
@@ -26,33 +83,84 @@ if (!isset($_SESSION['loggedin'])) {
 <body class="loggedin" style="margin: 0 auto;">
     <nav class="navtop">
         <div>
-            <h1><a href="hospital_home.php" style="padding: 0 0;">Blood Bank App</a></h1>
-            <a href="hospital_profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-            <a href="../logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <h1><a href="<?= $home_link ?>" style="padding: 0 0;">Blood Bank App</a></h1>
+            <a href="<?= $profile_link ?>" style="<?= $profile_display ?>"><i class="fas fa-user-circle"></i>Profile</a>
+            <a href="logout.php" style="<?= $profile_display ?>"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </div>
     </nav>
 
     <div class="content">
-        <h2>Home Page</h2>
-        <p>Welcome <?= $_SESSION['hospital_name'] ?>!</p>
+        <h2>Blood Samples Available</h2>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hospital Name</th>
+                    <th scope="col">Blood Group</th>
+                    <th scope="col">Blood Litres Available</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
 
 
-    <div class="container">
-        <div class="container py-4 centralize">
-            <div class="row align-items-md-stretch">
-              <div class="col-md-4">
-                <a href="add_blood_info.php" class="btn btn-outline-success btn-lg btn-huge">Add Blood Info</a>
-              </div>
-              <div class="col-md-4">
-                <a href="../available_blood_samples.php" class="btn btn-outline-danger btn-lg btn-huge">Available Blood Samples</a>
-              </div>
-              <div class="col-md-4">
-                <a href="view_requests.php" class="btn btn-outline-primary btn-lg btn-huge">View Requests</a>
-              </div>
-            </div>
-        </div>
-    </div>
+            <?php 
+                while($row = $result->fetch_assoc()) {
+                    $hospital_id = $row['hospital_id'];
+                    $blood_group = $row['blood_group'];
+                    $blood_litres = $row['blood_litres'];
+
+                    if($stmt = $con->prepare('SELECT hospital_name FROM hospital_accounts WHERE id = ?')) {
+
+                        $stmt->bind_param('i', $hospital_id);
+                        // execute query
+                        $stmt->execute();
+                        // store result to check if account exists in database
+                        $stmt->store_result();
+
+                        if($stmt->num_rows > 0) {
+                            $stmt->bind_result($hospital_name);
+                            $stmt->fetch();
+
+                            if(isset($_SESSION['loggedin'])) {
+                                if($_SESSION['role'] == 'hospital' or ($_SESSION['role'] == 'receiver' and $receiver_blood_group != $blood_group)) {
+                                    $is_disabled = 'disabled';
+                                    $btn_color = 'btn-outline-secondary';
+                                }
+                                else {
+                                    $is_disabled = '';
+                                    $btn_color = 'btn-outline-dark';
+                                }
+
+                                if($_SESSION['role'] == 'receiver') {
+                                    $request_link = "receiver/request_blood_sample.php?hospital_id=" . $hospital_id . "&" . "blood_group=" . "$blood_group";
+                                }
+                            }
+
+                            echo "<tr><td>" . $serial . "</td><td>" . $hospital_name . "</td><td>" . $blood_group . "</td><td>" . $blood_litres . "</td><td>" . "<a href='$request_link' class='btn <?= $btn_color ?> <?= $is_disabled ?>'>Request Sample</a>" . "</td></tr>";
+
+                        } else {
+                            echo "0 results";
+                        }
+
+                        $stmt->close();
+                        $serial += 1;
+                    }
+                }
+
+            ?>
+            </tbody>
+        </table>
     </div>
 
 </body>
-</html>
+</html> 
+
+
+<?php 
+
+    $con->close();
+} // close if statement
+
+ ?>

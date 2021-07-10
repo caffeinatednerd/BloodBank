@@ -44,6 +44,7 @@ if($stmt = $con->prepare('SELECT id, password, email, hospital_name FROM hospita
 
             session_regenerate_id();
             $_SESSION['loggedin'] = TRUE;
+            $_SESSION['role'] = 'hospital';
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $id;
             $_SESSION['hospital_name'] = $hospital_name;
