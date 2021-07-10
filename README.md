@@ -1,9 +1,9 @@
 # BloodBank
 
 ## Pending Tasks
-- [ ] Available Blood Samples on home page + home page design
 - [ ] Refactor Code repeating html & php code in a using include and require
 - [ ] Deploy
+- [ ] Responsive Navbar
 - [ ] Customise theme of websites
 - [ ] Pagination and Sorting
 
@@ -17,6 +17,7 @@
 - [X] Create View Requests Page
 - [X] Login and Regsiter Screen Validation Errors Display
 - [X] Jquery to implement successful redirect in case of failed validations
+- [X] Available Blood Samples on home page + home page design
 
 ## MySQL Database Setup Commands
 

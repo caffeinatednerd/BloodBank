@@ -1,13 +1,22 @@
-body {
+/*body {
     margin-top: 40px;
     background-color: #435165;
 }
+*/
 
-h1 {
-    margin-bottom: 30px;
+body {
+    margin: 0px 0px 0px 10px;
 }
 
-.btn-huge {
+.fa-plus {
+    color: #B22222;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+/*.btn-huge {
     padding-top: 40px;
     padding-bottom: 40px;
     margin: 0px 20px 20px 20px;
@@ -15,13 +24,31 @@ h1 {
     font-size: 30px;
     border-radius: 20px;
 }
-
-/*.btn-huge {
-    padding: 10px 20px;
-    
-    width:50%;    //Specify your width here
-}
 */
+
 .centralize {
     text-align: center;
+}
+
+.login form {
+    padding-top: 0px;
+}
+
+.centralize {
+    text-align: center;
+}
+
+#log, .or {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+button {
+    margin-bottom: 20px;
+    min-height: 55px;
+}
+
+.btn-top {
+    width: 100%;
 }

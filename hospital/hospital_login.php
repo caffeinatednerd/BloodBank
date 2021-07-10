@@ -58,7 +58,7 @@ if(!isset($_SESSION['log_message'])) {
         <div class="login_div" align="center">
             <a id="login_toggle">Not have an account? Signup!</a>
         </div>
-
+        
         <div id="log_message"><?= $log_message ?></div>
     </div>
 
