@@ -31,12 +31,19 @@ else if(isset($_POST['receiver'])) {
             <div class="container py-4 centralize">
                 <div class="row align-items-md-stretch">
                   <div class="col-md-6">
-                    <button type="submit" name="hospital" class="btn btn-outline-success btn-lg btn-huge">Hospital</button>
+                    <button type="submit" name="hospital" class="btn btn-outline-success btn-huge">Hospital</button>
                   </div>
                   <div class="col-md-6">
-                    <button type="submit" name="receiver" class="btn btn-outline-danger btn-lg btn-huge">Receiver</button>
+                    <button type="submit" name="receiver" class="btn btn-outline-danger btn-huge">Receiver</button>
                   </div>
                 </div>
+
+                <div class="row align-items-md-stretch">
+                  <div class="col-md-12">
+                    <button type="submit" name="hospital" class="btn btn-outline-light btn-huge">Available Blood Samples</button>
+                  </div>
+                </div>
+
             </div>
         </form>
     </div>

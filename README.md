@@ -1,8 +1,11 @@
 # BloodBank
 
 ## Pending Tasks
-- [ ] Customise theme of websites
+- [ ] Available Blood Samples on home page + home page design
 - [ ] Refactor Code repeating html & php code in a using include and require
+- [ ] Deploy
+- [ ] Customise theme of websites
+- [ ] Pagination and Sorting
 
 ## Completed Tasks
 - [X] Completed Sign Up and Login Page
@@ -12,7 +15,8 @@
 - [X] Create Add Blood Info Page
 - [X] Create Available Blood Samples Page
 - [X] Create View Requests Page
-
+- [X] Login and Regsiter Screen Validation Errors Display
+- [X] Jquery to implement successful redirect in case of failed validations
 
 ## MySQL Database Setup Commands
 

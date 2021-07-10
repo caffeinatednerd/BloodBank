@@ -53,7 +53,7 @@ $result = $con->query($sql);
 
     <?php 
         if($result->num_rows > 0) {
-        $serial = 1;
+            $serial = 1;
     ?>
     <div class="content">
         <h2>Blood Sample Requests</h2>

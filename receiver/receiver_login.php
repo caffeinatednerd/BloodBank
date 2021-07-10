@@ -1,3 +1,24 @@
+<?php
+
+session_start();
+
+if(!isset($_SESSION['reg_message'])) {
+    $reg_message = '';
+} else {
+    $reg_message = $_SESSION['reg_message'];
+    $_SESSION['status'] == 'success' ? $msg_color = '#32CD32' : $msg_color = 'red';
+}
+
+if(!isset($_SESSION['log_message'])) {
+    $log_message = '';
+} else {
+    $log_message = $_SESSION['log_message'];
+    $_SESSION['status'] == 'success' ? $msg_color = '#32CD32' : $msg_color = 'red';
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,13 +28,19 @@
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link href="../css/login.css" rel="stylesheet" type="text/css">
     <link href="../css/receiver_login.css" rel="stylesheet" type="text/css">
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous">      
-    </script>
+    <style type="text/css">
+        #reg_message, #log_message {
+            text-align: center;
+            color: <?= $msg_color ?>;
+            padding-bottom: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
-<body>
+<body onload="hideLoadingDiv()">
     <div id="login_form" class="login">
         <h1>Receiver Login</h1>
         <form action="receiver_authenticate.php" method="post">
@@ -33,8 +60,10 @@
         <br>
 
         <div class="login_div" align="center">
-            <a id="login_toggle">Create New Account</a>
+            <a id="login_toggle">Not have an account? Signup!</a>
         </div>
+
+        <div id="log_message"><?= $log_message ?></div>
     </div>
 
     <div id="register_form" class="register">
@@ -76,11 +105,49 @@
         </form>
         <br>
         <div class="register_div" align="center">
-            <a id="register_toggle">Already a user? Login</a>
+            <a id="register_toggle">Already a user? Login!</a>
         </div>
+
+        <div id="reg_message"><?= $reg_message ?></div>
     </div>
 
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous">      
+    </script>
+
+
     <script>
+        
+  <?php if(isset($_SESSION['reg_message'])) { ?>
+            $(document).ready(function(){
+                $('#login_form').toggle();
+                $('#register_form').toggle();
+            });
+  <?php } ?>
+
+    </script>
+    
+
+    <script>
+
+        <?php if(isset($_SESSION['code'])) { ?>
+
+        function hideLoadingDiv() {
+          setTimeout(function(){
+            <?php if($_SESSION['code'] == 'reg') { ?>
+                document.getElementById('reg_message').classList.add('hidden');
+            <?php } 
+            else if($_SESSION['code'] == 'log') { ?>
+                document.getElementById('log_message').classList.add('hidden');
+            <?php } ?>
+          }, 5000)
+        };
+
+        <?php } ?>
+
+
         $(document).ready(function(){
             $('#login_toggle').click(function(){
                 $('#login_form').toggle();
@@ -92,6 +159,16 @@
                 $('#login_form').toggle();
             });
         });
+
     </script>
+
 </body>
 </html>
+
+<?php
+
+// To avoid displaying reg_message after refreshing page
+unset($_SESSION['reg_message']);
+unset($_SESSION['log_message']);
+
+?>

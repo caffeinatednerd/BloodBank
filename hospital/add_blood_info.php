@@ -86,3 +86,10 @@ if(!isset($_SESSION['message'])) {
 
 </body>
 </html>
+
+<?php
+
+// To avoid displaying message after refreshing page
+unset($_SESSION['message']);
+
+?>

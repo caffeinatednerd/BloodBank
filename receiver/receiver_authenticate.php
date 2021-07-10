@@ -12,15 +12,23 @@ $DATABASE_NAME = 'blood_bank';
 // connect to db
 $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 
+function redirect($code) {
+    $_SESSION['status'] = $code;
+    $_SESSION['code'] = 'log';
+    header('Location: receiver_login.php');
+    exit;
+}
+
 // if there is any error with the connection, stop script and dispay error
 if( mysqli_connect_errno() ) {
-    exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+    $_SESSION['log_message'] = 'Failed to connect to MySQL: ' . mysqli_connect_error();
+    redirect('failed');
 }
 
 // check if data from login form was submitted, isset() will check if data exists
 if( !isset($_POST['username'], $_POST['password'] )) {
-    // could not get the data that should have been sent
-    exit('Please fill both the username and password fields!');
+    $_SESSION['log_message'] = 'Please fill both the username and password fields!';
+    redirect('failed');
 }
 
 // prepare a statment for getting id and password for current user from db
@@ -54,11 +62,13 @@ if($stmt = $con->prepare('SELECT id, password, email, blood_group, receiver_name
         } 
         else {
             // Incorrect password
-            echo 'Incorrect password!';
+            $_SESSION['log_message'] = 'Incorrect password!';
+            redirect('failed');
         }   
     } else {
         // Incorrect username
-        echo 'Incorrect username!';
+        $_SESSION['log_message'] = 'Username not present!';
+        redirect('failed');
     }
 
     $stmt->close();

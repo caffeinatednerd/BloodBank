@@ -62,9 +62,6 @@ if(isset($_SESSION['loggedin'])) {
 
 $sql = 'SELECT hospital_id, blood_group, blood_litres FROM blood_banks';
 $result = $con->query($sql);
-
-if($result->num_rows > 0) {
-    $serial = 1;
 ?>
 
 <!DOCTYPE html>
@@ -88,6 +85,11 @@ if($result->num_rows > 0) {
             <a href="logout.php" style="<?= $profile_display ?>"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </div>
     </nav>
+
+    <?php 
+        if($result->num_rows > 0) {
+            $serial = 1;
+    ?>
 
     <div class="content">
         <h2>Blood Samples Available</h2>
@@ -147,20 +149,21 @@ if($result->num_rows > 0) {
                         $stmt->close();
                         $serial += 1;
                     }
-                }
+                }    
 
-            ?>
+                $con->close();
+            } // close if statement
+
+            else { ?>
+
+                <div class="content centralize">
+                    <h2>Blood samples will be available soon!</h2>
+                </div> 
+            
+      <?php } ?>
             </tbody>
         </table>
     </div>
 
 </body>
 </html> 
-
-
-<?php 
-
-    $con->close();
-} // close if statement
-
- ?>
