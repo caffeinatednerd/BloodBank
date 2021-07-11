@@ -77,7 +77,7 @@ Now you can run the app by running a local apache server and MySQL on XAMPP.
 The website will be available [here](https://localhost/blood_bank/).
 
 
-## Tasks Completed
+<!-- ## Tasks Completed
 - [X] Completed Sign Up and Login Page
 - [X] Completed Home and Profile Page of Hospital
 - [X] Completed Home and Profile Page of Receiver
@@ -92,4 +92,4 @@ The website will be available [here](https://localhost/blood_bank/).
 - [X] Add receiver alert on request sample
 - [X] Add your signature + Internshala in the website
 - [X] Sort Graphs
-- [X] Deploy
+- [X] Deploy -->
