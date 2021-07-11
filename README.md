@@ -65,7 +65,7 @@ ALTER TABLE blood_bank.blood_requests
 
 Then define foreign key relationships among the created tables as shown in the diagram below:
 
-![Database Schema Design](Schema_Design.png)
+![Database Schema Design](https://i.ibb.co/VHKrDVq/Schema-Design.png)
 
 All the foreign keys should be defined with these configurations:
 - On Delete: CASCADE
