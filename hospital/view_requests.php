@@ -2,21 +2,19 @@
 
 session_start();
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// Redirect to homepage if not logged in
+include '../common/redirect_to_homepage.php';
 
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to Database
+// include '../common/connect_local_db.php';
+
+// Connect to remote database
+include '../common/connect_remote_db.php';
+
 
 if( mysqli_connect_errno() ) {
     // If there is any error with the connection, stop script and dispay error
     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
-
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
 }
 
 if($_SESSION['role'] != 'hospital') {
@@ -39,10 +37,12 @@ $result = $con->query($sql);
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../css/hospital_page.css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
 </head>
-<body class="loggedin" style="margin: 0 auto;">
+<body class="loggedin" style="margin: 0 auto; padding-bottom: 32px;">
     <nav class="navtop">
         <div>
             <h1><a href="hospital_home.php" style="padding: 0 0;">Blood Bank App</a></h1>
@@ -58,7 +58,7 @@ $result = $con->query($sql);
     <div class="content">
         <h2>Blood Sample Requests</h2>
         
-        <table class="table table-striped">
+        <table id="req_table" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -116,6 +116,16 @@ $result = $con->query($sql);
             </tbody>
         </table>
     </div>
+
+    <?php include('../common/footer_dark.php'); ?>
+
+    <?php include('../common/data_table_cdn.php'); ?>
+
+    <script>
+        $(document).ready(function() {
+            $('#req_table').DataTable();
+        } );
+    </script>
 
 </body>
 </html> 

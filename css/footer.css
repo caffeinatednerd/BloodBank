@@ -1,0 +1,22 @@
+footer span {
+    background-color: transparent;
+    font-size: 13px;
+}
+
+.sig {
+
+}
+
+.for {
+    padding-left: 2px;
+    padding-right: 5px;
+}
+
+img {
+    position:relative; 
+    top:-10px;
+}
+
+footer a {
+    /*text-decoration: none;*/
+}

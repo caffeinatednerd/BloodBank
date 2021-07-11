@@ -2,11 +2,8 @@
 
 session_start();
 
-// If user is not logged in, redirect to login page
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
-}
+// Redirect to homepage if not logged in
+include '../common/redirect_to_homepage.php';
 
 ?>
 
@@ -15,13 +12,14 @@ if (!isset($_SESSION['loggedin'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home Page</title>
+    <title>Blood Bank App</title>
     <link rel="shortcut icon" href="../public/images/blood-drop.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="../css/hospital_page.css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
 </head>
 <body class="loggedin" style="margin: 0 auto;">
     <nav class="navtop">
@@ -54,5 +52,7 @@ if (!isset($_SESSION['loggedin'])) {
     </div>
     </div>
 
+
+    <?php include('../common/footer_dark.php'); ?>
 </body>
 </html>

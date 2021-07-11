@@ -2,12 +2,11 @@
 
 session_start();
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// // Connect to Database
+// include 'common/connect_local_db.php';
 
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to remote database
+include 'common/connect_remote_db.php';
 
 if( mysqli_connect_errno() ) {
     // If there is any error with the connection, stop script and dispay error
@@ -69,15 +68,18 @@ $result = $con->query($sql);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home Page</title>
+    <title>Blood Bank App</title>
     <link rel="shortcut icon" href="public/images/blood-drop.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css" rel="stylesheet" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="css/hospital_page.css">
+    <link href="css/footer.css" rel="stylesheet" type="text/css">
+    <link href="css/button.css" rel="stylesheet" type="text/css">
 </head>
-<body class="loggedin" style="margin: 0 auto;">
+<body class="loggedin" style="margin: 0 auto; padding-bottom: 32px;">
     <nav class="navtop">
         <div>
             <h1><a href="<?= $home_link ?>" style="padding: 0 0;">Blood Bank App</a></h1>
@@ -94,7 +96,7 @@ $result = $con->query($sql);
     <div class="content">
         <h2>Blood Samples Available</h2>
         
-        <table class="table table-striped">
+        <table id="blood_table" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -136,11 +138,11 @@ $result = $con->query($sql);
                                 }
 
                                 if($_SESSION['role'] == 'receiver') {
-                                    $request_link = "receiver/request_blood_sample.php?hospital_id=" . $hospital_id . "&" . "blood_group=" . "$blood_group";
+                                    $request_link = "receiver/request_blood_sample.php?hospital_id=" . $hospital_id . "&" . "blood_group=" . $blood_group;
                                 }
                             }
 
-                            echo "<tr><td>" . $serial . "</td><td>" . $hospital_name . "</td><td>" . $blood_group . "</td><td>" . $blood_litres . "</td><td>" . "<a href='$request_link' class='btn <?= $btn_color ?> <?= $is_disabled ?>'>Request Sample</a>" . "</td></tr>";
+                            echo "<tr><td>" . $serial . "</td><td>" . $hospital_name . "</td><td>" . $blood_group . "</td><td>" . $blood_litres . "</td><td>" . "<a style='font-size: 12px;' href='$request_link' class='btn <?= $btn_color ?> <?= $is_disabled ?>'>Request Sample</a>" . "</td></tr>";
 
                         } else {
                             echo "0 results";
@@ -164,6 +166,35 @@ $result = $con->query($sql);
             </tbody>
         </table>
     </div>
+
+    <footer class="text-center text-white fixed-bottom" style="background-color: #2F3947;">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <span class="sig">made with ❤️ by <a class="text-white" href="https://www.linkedin.com/in/caffeinatednerd" target="_blank">Prabhu Singh</a></span>
+        
+        <span class="for">for</span><img id="logo" src="public/images/internshala_logo.svg" alt="Internshala Logo">
+      </div>
+    </footer>
+
+    <?php
+    
+    if(isset($_SESSION['message'])) {
+        echo '<script language="javascript">';
+        echo 'alert("'.$_SESSION['message'].'")';
+        
+        echo '</script>';
+
+        unset($_SESSION['message']);
+    }
+      
+    ?>
+
+    <?php include('common/data_table_cdn.php'); ?>
+
+    <script>
+        $(document).ready(function() {
+            $('#blood_table').DataTable();
+        } );
+    </script>
 
 </body>
 </html> 

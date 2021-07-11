@@ -2,18 +2,14 @@
 
 session_start();
 
-// If user is not logged in, redirect to login page
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
-}
+// Redirect to homepage if not logged in
+include '../common/redirect_to_homepage.php';
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// // Connect to Database
+// include '../common/connect_local_db.php';
 
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to remote database
+include '../common/connect_remote_db.php';
 
 if( mysqli_connect_errno() ) {
     // If there is any error with the connection, stop script and dispay error
@@ -41,7 +37,7 @@ if ($stmt = $con->prepare('INSERT INTO blood_requests (receiver_id, hospital_id,
     $stmt->execute();
     $stmt->close();
 
-    $_SESSION['message'] = "Sample information added/updated successfully!";
+    $_SESSION['message'] = 'Request For Blood Sample Successful!';
     header('Location: /blood_bank/available_blood_samples.php');
     exit;
 } else {

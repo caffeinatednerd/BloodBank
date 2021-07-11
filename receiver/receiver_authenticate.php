@@ -3,14 +3,11 @@
 // start session
 session_start();
 
-// define db connection parameters
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// // Connect to Database
+// include '../common/connect_local_db.php';
 
-// connect to db
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to remote database
+include '../common/connect_remote_db.php';
 
 function redirect($code) {
     $_SESSION['status'] = $code;

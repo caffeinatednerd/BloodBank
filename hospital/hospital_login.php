@@ -23,11 +23,15 @@ if(!isset($_SESSION['log_message'])) {
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Hospital Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blood Bank App</title>
     <link rel="shortcut icon" href="../public/images/blood-drop.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../css/login.css" rel="stylesheet" type="text/css">
     <link href="../css/hospital_login.css" rel="stylesheet" type="text/css">
+    <link href="../css/footer.css" rel="stylesheet" type="text/css">
     <style type="text/css">
         #reg_message, #log_message {
             text-align: center;
@@ -91,6 +95,9 @@ if(!isset($_SESSION['log_message'])) {
         <div id="reg_message"><?= $reg_message ?></div>
     </div>
 
+    
+    <?php include('../common/footer_login.php'); ?>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -146,7 +153,7 @@ if(!isset($_SESSION['log_message'])) {
 
 <?php
 
-// To avoid displaying reg_message after refreshing page
+// To avoid displaying message after refreshing page
 unset($_SESSION['reg_message']);
 unset($_SESSION['log_message']);
 

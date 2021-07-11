@@ -1,28 +1,24 @@
 <?php
 
-// start session
 session_start();
 
-// define db connection parameters
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// // Connect to Database
+// include '../common/connect_local_db.php';
 
-// connect to db
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to remote database
+include '../common/connect_remote_db.php';
+
+// if there is any error with the connection, stop script and dispay error
+if( mysqli_connect_errno() ) {
+    $_SESSION['log_message'] = 'Failed to connect to MySQL: ' . mysqli_connect_error();
+    redirect('failed');
+}
 
 function redirect($code) {
     $_SESSION['status'] = $code;
     $_SESSION['code'] = 'log';
     header('Location: hospital_login.php');
     exit;
-}
-
-// if there is any error with the connection, stop script and dispay error
-if( mysqli_connect_errno() ) {
-    $_SESSION['log_message'] = 'Failed to connect to MySQL: ' . mysqli_connect_error();
-    redirect('failed');
 }
 
 // check if data from login form was submitted, isset() will check if data exists

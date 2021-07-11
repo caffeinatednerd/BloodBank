@@ -2,18 +2,14 @@
 
 session_start();
 
-// If user is not logged in, redirect to login page
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: /blood_bank/index.php');
-    exit;
-}
+// Redirect to homepage if not logged in
+include '../common/redirect_to_homepage.php';
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'blood_bank';
+// // Connect to Database
+// include '../common/connect_local_db.php';
 
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+// Connect to remote database
+include '../common/connect_remote_db.php';
 
 if( mysqli_connect_errno() ) {
     // If there is any error with the connection, stop script and dispay error
