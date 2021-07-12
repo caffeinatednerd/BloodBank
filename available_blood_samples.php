@@ -42,7 +42,8 @@ if(isset($_SESSION['loggedin'])) {
     $request_link = 'receiver/receiver_login.php';
     $profile_display = "display: none;";
 
-    $home_link = '/blood_bank/index.php';
+    // $home_link = '/blood_bank/index.php';
+    $home_link = '/';
     $profile_link = '';
 }
 

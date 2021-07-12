@@ -2,7 +2,7 @@
 
 session_start();
 session_destroy();
-// Redirect to the login page:
-header('Location: /blood_bank/index.php');
+// Redirect to the home page:
+header('Location: /');
 
 ?>

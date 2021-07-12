@@ -38,7 +38,7 @@ if ($stmt = $con->prepare('INSERT INTO blood_requests (receiver_id, hospital_id,
     $stmt->close();
 
     $_SESSION['message'] = 'Request For Blood Sample Successful!';
-    header('Location: /blood_bank/available_blood_samples.php');
+    header('Location: /available_blood_samples.php');
     exit;
 } else {
     // Something is wrong with the sql statement, check to make sure accounts table exists with all 4 fields
