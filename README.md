@@ -1,7 +1,7 @@
 Blood Bank App
 ==============
 
-This is a blood bank application developed as part of assignment by [Internshala](https://internshala.com/) and deployed on Heroku at [https://bloodbank-prabhu.herokuapp.com/](https://bloodbank-prabhu.herokuapp.com/).
+This is a blood bank application deployed on Heroku at [https://bloodbank-prabhu.herokuapp.com/](https://bloodbank-prabhu.herokuapp.com/).
 
 This app was made using [PHP](https://www.php.net).
 
