@@ -1,13 +1,13 @@
 <?php 
 
 if(isset($_POST['hospital'])) {
-    header('Location: hospital/hospital_login.php');
+    header('Location: hospital/hospital_login');
 }
 else if(isset($_POST['receiver'])) {
-    header('Location: receiver/receiver_login.php');
+    header('Location: receiver/receiver_login');
 }
 else if(isset($_POST['blood_samples'])) {
-    header('Location: available_blood_samples.php');
+    header('Location: available_blood_samples');
 }
 
 ?>
@@ -64,9 +64,9 @@ else if(isset($_POST['blood_samples'])) {
 
     <footer class="text-center text-white fixed-bottom">
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        <span class="sig">made with ❤️ by <a class="text-white" href="https://www.linkedin.com/in/caffeinatednerd" target="_blank">Prabhu Singh</a></span>
+        <span class="sig">made with ❤️ by <a class="text-white" href="https://github.com/caffeinatednerd/BloodBank" target="_blank">Prabhu Singh</a></span>
         
-        <span class="for">for</span><img id="logo" src="public/images/internshala_logo.svg" alt="Internshala Logo">
+        <!-- <span class="for">for</span><img id="logo" src="public/images/internshala_logo.svg" alt="Internshala Logo"> -->
       </div>
     </footer>
 

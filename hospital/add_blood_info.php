@@ -5,6 +5,12 @@ session_start();
 // Redirect to homepage if not logged in
 include '../common/redirect_to_homepage.php';
 
+// If user is not logged in as hospital, redirect to login page
+if (isset($_SESSION['role'] != 'hospital')) {
+    header('Location: /');
+    exit;
+}
+
 if(!isset($_SESSION['message'])) {
     $message = '';
 } else {
